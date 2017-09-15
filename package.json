@@ -1,6 +1,6 @@
 {
 "name": "mailtrap",
-"description": "A plugin to autorotate images.",
+"description": "A Kirby email service for MailTrap.",
 "author": "Simon Barrett",
 "license": "MIT",
 "version": "1.0.0",
