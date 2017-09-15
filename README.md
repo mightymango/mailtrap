@@ -54,7 +54,7 @@ if($email->send()) {
 ```
 
 ## Note
-Currently this service will only accept email addresses formated as `someone@example.com` not `Someone <someone@example.com>`.
+Currently this service will only accept email addresses formated as `peter@example.com` not `Peter <peter@example.com>`.
 
 
 ## Credits
