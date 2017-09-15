@@ -1,4 +1,4 @@
-# mailtrap
+# MailTrap
 ![Version](https://img.shields.io/badge/version-1.0.1-green.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Kirby Version](https://img.shields.io/badge/Kirby-2.4%2B-red.svg)
@@ -12,50 +12,59 @@ A [Kirby](http://getkirby.com) email service for [MailTrap](https://mailtrap.io)
 If you are using the [Kirby CLI](https://github.com/getkirby/cli) you can install this plugin by running the following command in your shell from the root folder of your Kirby installation:
 
 ```
-kirby plugin:install mightymango/autorotate
+kirby plugin:install mightymango/mailtrap
 ```
 
 ### 2. Manual
-[Download this archive](https://github.com/mightymango/autorotate/archive/1.0.2.zip), extract it and rename it to `autorotate`. Copy the folder to your `site/plugins` folder.
+[Download this archive](https://github.com/mightymango/mailtrap/archive/1.0.1.zip), extract it and rename it to `mailtrap`. Copy the folder to your `site/plugins` folder.
 
 ### 3. Git Submodule
 If you know your way around git, you can download this as a submodule:
 
 ```
-git submodule add https://github.com/mightymango/autorotate/ site/plugins/autorotate
+git submodule add https://github.com/mightymango/mailtrap/ site/plugins/mailtrap
 ```
 
 ## Usage
-The plugin adds a hook so that any image is automatically processed when it is uploaded.
-
-If you wish to disable the hook for any reason just add the following to your config.php file:
+To use this mail service add the following to your config.php file:
 
 ```
-c::set('autorotate.enabled', false);
+c::set('mailtrap.host', 'smtp.mailtrap.io');
+c::set('mailtrap.port', 2525);
+c::set('mailtrap.username', "<Your username>");
+c::set('mailtrap.password', "<Your password>");
+```
+
+To send emails using MailTrap, set `mailtrap` as the email service:
+
+```php
+$email = email(array(
+  'service' => 'mailtrap',
+  'to'      => 'peter@example.com',
+  'from'    => 'johndoe@email.com',
+  'subject' => 'Sending emails with Kirby is easy',
+  'body'    => 'Hey! This was really easy!'
+));
+
+if($email->send()) {
+  echo 'The email has been sent';
+} else {
+  echo $email->error();
+}
 ```
 
 ## Note
-This plugin only autorotates images that have EXIF orientation flags, in both landscape and portrait orientation. Typically these are images that have been created on an iPhone etc.
+Currently this service will only accept email addresses formated as `someone@example.com` not `Someone <someone@example.com>`.
 
-If an image has been edited and it's orientation changed prior to uploading, this plugin will have no effect. Neither will it fix images that have been uploaded before the plugin was installed.
-
-For this plugin to work it requires that Imagick has been compiled against ImageMagick version 6.3.0 or higher.
-
-## Looking for images to test?
-Check out [recurser/exif-orientation-examples](https://github.com/recurser/exif-orientation-examples)
 
 ## Credits
-Based on code from [orrd101 at yahoo dot com ](http://php.net/manual/en/imagick.getimageorientation.php#111448).
-
 Readme file based on template by [Thiousi](https://github.com/Thiousi/kirby-plugin-starterkit)
+
+Uses [PHPMailer](https://github.com/PHPMailer/PHPMailer) to send.
 
 ## License
 MIT
 
 ## Changelog
-### 1.0.2
-- Checks if imageick is installed
-### 1.0.1
-- Small bug fix
 ### 1.0.0
 - Initial release
